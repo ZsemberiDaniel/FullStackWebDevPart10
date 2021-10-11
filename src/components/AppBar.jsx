@@ -40,12 +40,18 @@ const AppBar = () => {
 
     const signUserOut = useSignOut();
 
+    const isSignedIn = data && data.authorizedUser;
+    const isNotSignedIn = data && !data.authorizedUser;
+
     return (
         <View style={styles.container}>
             <ScrollView horizontal>
                 <AppBarTab name="Repositories" linkTo="/" />
-                {(!loading && (data && !data.authorizedUser)) && <AppBarTab name="Sign in" linkTo="/signIn" />}
-                {(!loading && (data && data.authorizedUser)) && <AppBarTab name="Sign out" onPress={signUserOut} />}
+                {(!loading && isSignedIn) && <AppBarTab name="Review" linkTo="/review" />}
+                {(!loading && isSignedIn) && <AppBarTab name="My reviews" linkTo="/myReviews" />}
+                {(!loading && isNotSignedIn) && <AppBarTab name="Register" linkTo="/register" />}
+                {(!loading && isNotSignedIn) && <AppBarTab name="Sign in" linkTo="/signIn" />}
+                {(!loading && isSignedIn) && <AppBarTab name="Sign out" onPress={signUserOut} />}
             </ScrollView>
         </View>
     );

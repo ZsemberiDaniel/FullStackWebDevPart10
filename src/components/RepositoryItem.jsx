@@ -1,5 +1,6 @@
 import React from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import { useHistory } from 'react-router';
 import theme from '../theme';
 
 const style = StyleSheet.create({
@@ -65,29 +66,36 @@ const nFormatter = (num, digits) => {
 const DoubleRowItem = ({ number, description }) => {
     return (
         <View style={style.flexItem}>
-            <Text style={style.itemHeader}>{nFormatter(number, 2)}</Text>
+            <Text style={style.itemHeader} testID={description}>{nFormatter(number, 2)}</Text>
             <Text style={style.itemText}>{description}</Text>
         </View>
     );
 };
 
 const RepositoryItem = ({ repository }) => {
+    const history = useHistory();
+    const onPress = () => {
+        history.push(`/repository/${repository.id}`);
+    };
+
     return (
         <View style={{backgroundColor: 'white'}}>
-            <View style={style.topFlexContainer}>
-                <Image source={{ uri: repository.ownerAvatarUrl }} style={style.thumbnailImage} />
-                <View style={{paddingHorizontal: 10, flexShrink: 1}}>
-                    <Text style={style.itemHeader}>{repository.fullName}</Text>
-                    <Text style={style.itemText}>{repository.description}</Text>
-                    <View style={style.badge}><Text style={{color: 'white'}}>{repository.language}</Text></View>
+            <Pressable onPress={onPress}>
+                <View style={style.topFlexContainer}>
+                    <Image source={{ uri: repository.ownerAvatarUrl }} style={style.thumbnailImage} />
+                    <View style={{paddingHorizontal: 10, flexShrink: 1}}>
+                        <Text style={style.itemHeader} testID="fullName">{repository.fullName}</Text>
+                        <Text style={style.itemText} testID="description">{repository.description}</Text>
+                        <View style={style.badge}><Text style={{color: 'white'}} testID="language">{repository.language}</Text></View>
+                    </View>
                 </View>
-            </View>
-            <View style={style.flexContainer}>
-                <DoubleRowItem number={repository.stargazersCount} description="Stars" />
-                <DoubleRowItem number={repository.forksCount} description="Forks" />
-                <DoubleRowItem number={repository.reviewCount} description="Reviews" />
-                <DoubleRowItem number={repository.ratingAverage} description="Rating" />
-            </View>
+                <View style={style.flexContainer}>
+                    <DoubleRowItem number={repository.stargazersCount} description="Stars" />
+                    <DoubleRowItem number={repository.forksCount} description="Forks" />
+                    <DoubleRowItem number={repository.reviewCount} description="Reviews" />
+                    <DoubleRowItem number={repository.ratingAverage} description="Rating" />
+                </View>
+            </Pressable>
         </View>
     );
 };

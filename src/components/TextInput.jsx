@@ -12,6 +12,7 @@ const styles = StyleSheet.create({
         borderStyle: 'solid',
         borderWidth: 1,
         borderRadius: 5,
+        backgroundColor: 'white'
     },
     textInputError: {
         borderColor: theme.colors.error,

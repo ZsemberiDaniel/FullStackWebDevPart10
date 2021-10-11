@@ -4,6 +4,7 @@ const theme = {
     colors: {
         textPrimary: '#24292e',
         textSecondary: '#fafafa',
+        textLight: '#757575',
         primary: '#24292e',
         background: '#e1e4e8',
         badge: '#0366d6',
@@ -23,6 +24,7 @@ const theme = {
     fontWeights: {
         normal: '400',
         bold: '700',
+        light: '100'
     },
 };
 
